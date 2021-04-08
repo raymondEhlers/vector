@@ -11,7 +11,7 @@ import vector._backends.object_
 
 def test_planar_posfactor():
     vec = vector._backends.object_.VectorObject2D(
-        vector._backends.object_.AzimuthalObjectXY(1, 2),
+        azimuthal=vector._backends.object_.AzimuthalObjectXY(1, 2),
     )
     out = vec.scale(1.75)
     assert type(out.azimuthal) == type(vec.azimuthal)  # noqa: E721
@@ -28,7 +28,7 @@ def test_planar_posfactor():
 
 def test_planar_negfactor():
     vec = vector._backends.object_.VectorObject2D(
-        vector._backends.object_.AzimuthalObjectXY(1, 2),
+        azimuthal=vector._backends.object_.AzimuthalObjectXY(1, 2),
     )
     out = vec.scale(-1.75)
     assert type(out.azimuthal) == type(vec.azimuthal)  # noqa: E721

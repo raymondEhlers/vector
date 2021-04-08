@@ -5,6 +5,7 @@
 
 import typing
 
+import vector
 from vector._typeutils import (
     BoolCollection,
     ScalarCollection,
@@ -141,7 +142,9 @@ class VectorProtocol:
             vectors without momentum-synonyms.
     """
 
-    lib: Module
+    @property
+    def lib(self) -> Module:
+        ...
 
     def _wrap_result(
         self,
@@ -1217,6 +1220,24 @@ class MomentumProtocolLorentz(VectorProtocolLorentz, MomentumProtocolSpatial):
 
 
 class Vector(VectorProtocol):
+    @typing.overload
+    def __new__(cls, *, x: float, y: float) -> "vector.VectorObject2D":
+        ...
+
+    @typing.overload
+    def __new__(cls, *, rho: float, phi: float) -> "vector.VectorObject2D":
+        ...
+
+    @typing.overload
+    def __new__(cls, __azumthal: "Azimuthal") -> "Vector":
+        ...
+
+    def __new__(cls, *args: "Azimuthal", **kwargs: float) -> "Vector":
+        if cls is not Vector:
+            return super().__new__(cls)
+
+        return vector.obj(*args, **kwargs)
+
     def to_xy(self) -> VectorProtocolPlanar:
         from vector._compute import planar
 
@@ -2395,7 +2416,8 @@ def _lib_of(*objects: VectorProtocol) -> Module:  # NumPy-like module
     for obj in objects:
         if isinstance(obj, Vector):
             if lib is None:
-                lib = obj.lib
+                # Not sure why mypy complains about member not being assignable here
+                lib = obj.lib  # type: ignore
             elif lib is not obj.lib:
                 raise TypeError(
                     f"cannot use {lib} and {obj.lib} in the same calculation"

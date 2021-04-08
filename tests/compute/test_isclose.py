@@ -11,10 +11,10 @@ import vector._backends.object_
 
 def test_planar_object():
     v1 = vector._backends.object_.VectorObject2D(
-        vector._backends.object_.AzimuthalObjectXY(0.1, 0.2)
+        azimuthal=vector._backends.object_.AzimuthalObjectXY(0.1, 0.2)
     )
     v2 = vector._backends.object_.VectorObject2D(
-        vector._backends.object_.AzimuthalObjectXY(0.1, 0.2)
+        azimuthal=vector._backends.object_.AzimuthalObjectXY(0.1, 0.2)
     )
     assert v1.isclose(v2)
 

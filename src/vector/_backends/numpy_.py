@@ -1469,8 +1469,7 @@ def array(*args: typing.Any, **kwargs: typing.Any) -> VectorNumpy:
     else:
         cls = MomentumNumpy2D if is_momentum else VectorNumpy2D
 
-    # VectorNumpy has no constructor, so mypy flags this line
-    return cls(*args, **kwargs)  # type: ignore
+    return cls(*args, **kwargs)
 
 
 VectorNumpy2D.ProjectionClass2D = VectorNumpy2D

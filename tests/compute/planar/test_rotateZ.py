@@ -12,7 +12,7 @@ import vector._backends.object_
 
 def test_xy():
     vec = vector._backends.object_.VectorObject2D(
-        vector._backends.object_.AzimuthalObjectXY(1, 0)
+        azimuthal=vector._backends.object_.AzimuthalObjectXY(1, 0)
     )
     assert vec.rotateZ(0.1).x == pytest.approx(0.9950041652780258)
     assert vec.rotateZ(0.1).y == pytest.approx(0.09983341664682815)
@@ -29,7 +29,7 @@ def test_xy():
 
 def test_rhophi():
     vec = vector._backends.object_.VectorObject2D(
-        vector._backends.object_.AzimuthalObjectRhoPhi(1, 0)
+        azimuthal=vector._backends.object_.AzimuthalObjectRhoPhi(1, 0)
     )
     assert vec.rotateZ(0.1).rho == pytest.approx(1)
     assert vec.rotateZ(0.1).phi == pytest.approx(0.1)
